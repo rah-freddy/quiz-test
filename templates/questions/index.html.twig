@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questions
+{% endblock %}
+
+{% block body %}
+
+	<div class="example-wrapper">
+		<h1>Liste des questions</h1>
+		<table class="list">
+			<thead>
+				<tr>
+					<th>Groupe</th>
+					<th>Sujet</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if questions is defined %}
+					{% for question in questions %}
+						<tr>
+							<td>{{ question.questionGroupLevel.name }}</td>
+							<td>{{ question.text }}</td>
+							<td>
+								<a href="{{ path('question_delete', {'id': question.id}) }}">Supprimer</a>
+							</td>
+							<td>
+								<a href="{{ path('question_update', {'id': question.id}) }}">Modifier</a>
+							</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+		<a href="{{ path('question_create') }}">
+			<button type="button">Ajouter nouveau</button>
+		</a>
+	</div>
+{% endblock %}

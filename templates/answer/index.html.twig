@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réponses
+{% endblock %}
+
+{% block body %}
+
+	<div class="example-wrapper">
+		<h1>Liste des reponses</h1>
+		<table class="list">
+			<thead>
+				<tr>
+					<th>Question</th>
+					<th>reponse</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if answers is defined %}
+					{% for answer in answers %}
+						<tr>
+							<td>{{ answer.question.text }}</td>
+							<td>{{ answer.text }}</td>
+							<td>
+								<a href="{{ path('answer_delete', {'id': answer.id}) }}">Supprimer</a>
+							</td>
+							<td>
+								<a href="{{ path('answer_edit', {'id': answer.id}) }}">editer</a>
+							</td>
+						</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+		<a href="{{ path('answer_create') }}">
+			<button type="button">Ajouter nouveau</button>
+		</a>
+	</div>
+{% endblock %}

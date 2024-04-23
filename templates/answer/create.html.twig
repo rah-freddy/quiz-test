@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau reponse
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<h3>Ajouter nouveau reponse</h3>
+		{{form_start(form)}}
+		<div>
+			{{ form_widget(form.question) }}
+		</div>
+		<div>
+			<label>Reponse</label>
+			{{ form_widget(form.text) }}
+		</div>
+		<div>
+			<label>Vrai ou Faux</label>
+			{{ form_widget(form.isCorrect) }}
+		</div>
+		<div>
+			<button>Ajouter</button>
+		</div>
+		{{form_end(form)}}
+	</div>
+
+{% endblock %}

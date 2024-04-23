@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier question
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<h3>Modifier question</h3>
+		{{form_start(form)}}
+		<div>
+			<label>Sujet</label>
+			{{ form_widget(form.text) }}
+		</div>
+		<div>
+			{{ form_widget(form.questionGroupLevel) }}
+		</div>
+		<div>
+			<button>Enregister</button>
+		</div>
+		{{form_end(form)}}
+	</div>
+
+{% endblock %}
