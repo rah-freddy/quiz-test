@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau groupe de question
+{% endblock %}
+
+{% block body %}
+
+	<div>
+		<h3>Ajouter nouveau groupe de question</h3>
+		{{form_start(form)}}
+		<div>
+			<label>Nom</label>
+			{{ form_widget(form.name) }}
+		</div>
+		<div>
+			{{ form_widget(form.level) }}
+		</div>
+		<div>
+			<button>Ajouter</button>
+		</div>
+		{{form_end(form)}}
+	</div>
+
+{% endblock %}
