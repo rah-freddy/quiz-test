@@ -6,15 +6,16 @@
 {% block body %}
 
 	<div class="example-wrapper">
-		{% if question is defined and allAnswer is defined %}
-			{% for q in question %}
-				<h4>{{ q.question_text}}</h4>
+		{% if allAnswerQuestion is defined %}
+			{% for answer_question in allAnswerQuestion %}
+				<h4>{{ answer_question.question_text }}</h4>
+				{% set answers = answer_question.answer_text|split(',') %}
+				{% for answer in answers %}
+					<input type="radio" name="_answer_{{ loop.parent.loop.index }}" value="{{ answer }}">{{ answer }}</input><br>
 			{% endfor %}
 			<hr>
-			{% for answer in allAnswer %}
-				<p>{{ answer.answer_text }}</p>
-			{% endfor %}
-		{% endif %}
-
-	</div>
-{% endblock %}
+		{% endfor %}
+		<a href="#" id="view">Voir score</a>
+	{% endif %}
+	<h1 id="score" style="text-align: center;"></h1>
+</div>{% endblock %}
