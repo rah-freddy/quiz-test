@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}passer un test
+{% endblock %}
+
+{% block body %}
+
+	<div class="example-wrapper">
+		{% if allData is defined %}
+			<form method="get" action="{{ path('search_question_answer_by_group') }}">
+				<select name="groupe_id">
+					{% for data in allData %}
+						<option value="{{ data.id }}">{{ data.name }}</option>
+					{% endfor %}
+				</select>
+				<button type="submit">Démmarer le test</button>
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}

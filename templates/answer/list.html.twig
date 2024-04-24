@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test
+{% endblock %}
+
+{% block body %}
+
+	<div class="example-wrapper">
+		{% if question is defined and allAnswer is defined %}
+			{% for q in question %}
+				<h4>{{ q.question_text}}</h4>
+			{% endfor %}
+			<hr>
+			{% for answer in allAnswer %}
+				<p>{{ answer.answer_text }}</p>
+			{% endfor %}
+		{% endif %}
+
+	</div>
+{% endblock %}

@@ -18,9 +18,6 @@ class QuestionGroupLevel
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $level = null;
-
     #[ORM\OneToMany(targetEntity: Questions::class, mappedBy: 'questionGroupLevel', cascade: ['remove'])]
     private Collection $questions;
 
@@ -46,18 +43,6 @@ class QuestionGroupLevel
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLevel(): ?string
-    {
-        return $this->level;
-    }
-
-    public function setLevel(string $level): static
-    {
-        $this->level = $level;
 
         return $this;
     }

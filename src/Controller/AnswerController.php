@@ -94,4 +94,18 @@ class AnswerController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/search-question-answer', name: 'search_question_answer_by_group', methods: ['GET'])]
+    public function searchQuestionAnswerByGroupAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $idGroup = $request->query->get('groupe_id');
+        $listAnswer = $this->answerRepository->findAnswerByGroup($idGroup);
+        $listQuestion = $this->answerRepository->findQuestionByGroup($idGroup);
+
+        return $this->render('answer/list.html.twig', [
+            'allAnswer' => $listAnswer,
+            'question' => $listQuestion,
+        ]);
+    }
 }

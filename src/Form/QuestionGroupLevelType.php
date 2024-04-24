@@ -13,14 +13,7 @@ class QuestionGroupLevelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('level', ChoiceType::class, [
-                'placeholder' => 'Choisir le niveau...',
-                'choices' => [
-                    'Facile' => 'facile',
-                    'Difficile' => 'difficile',
-                ],
-            ]);
+            ->add('name');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
