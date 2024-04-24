@@ -11,7 +11,6 @@
 			<thead>
 				<tr>
 					<th>Nom</th>
-					<th>Niveau</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -20,7 +19,6 @@
 					{% for question_group_level in questionGroup %}
 						<tr>
 							<td>{{ question_group_level.name }}</td>
-							<td>{{ question_group_level.level }}</td>
 							<td>
 								<a href="{{ path('question_group_delete', {'id': question_group_level.id}) }}">Supprimer</a>
 							</td>

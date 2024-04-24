@@ -40,10 +40,8 @@ class QuestionGroupLevelController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $name = $form['name']->getData();
-            $level = $form['level']->getData();
 
             $questionGroup->setName($name);
-            $questionGroup->setLevel($level);
 
             $this->em->persist($questionGroup);
             $this->em->flush();
@@ -78,10 +76,8 @@ class QuestionGroupLevelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $name = $form['name']->getData();
-            $level = $form['level']->getData();
 
             $questionGroupLevelId->setName($name);
-            $questionGroupLevelId->setLevel($level);
 
             $this->em->persist($questionGroupLevelId);
             $this->em->flush();
@@ -91,6 +87,16 @@ class QuestionGroupLevelController extends AbstractController
 
         return $this->render('question_group_level/edit.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/take-test', name: 'take_test')]
+    public function takeTestAction()
+    {
+        $questionGroupLevels = $this->questionGroupLevelRepository->findAll();
+
+        return $this->render('question_group_level/take_test.html.twig', [
+            'allData' => $questionGroupLevels,
         ]);
     }
 }
