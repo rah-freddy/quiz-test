@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Answer;
+use App\Entity\QuizUsers;
 use App\Form\AnswerType;
 use App\Repository\AnswerRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -100,12 +103,33 @@ class AnswerController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         $idGroup = $request->query->get('groupe_id');
-        $listAnswer = $this->answerRepository->findAnswerByGroup($idGroup);
-        $listQuestion = $this->answerRepository->findQuestionByGroup($idGroup);
+        $listAnswerQuestion = $this->answerRepository->findQuestionAnswerByGroup($idGroup);
 
         return $this->render('answer/list.html.twig', [
-            'allAnswer' => $listAnswer,
-            'question' => $listQuestion,
+            'allAnswerQuestion' => $listAnswerQuestion,
         ]);
+    }
+
+    #[Route('/calculate-score', name: 'calculate_score', methods: ['POST'])]
+    public function calculateScoreAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $selectedAnswers = json_decode($request->getContent(), true)['selectedAnswers'];
+        $newArray = array_map('trim', $selectedAnswers);
+        $totalScore = 0;
+        foreach ($newArray as $key) {
+            $score = $this->answerRepository->findAnswerCorrect([$key]);
+            $totalScore += $score;
+        }
+        $quizUser = new QuizUsers();
+        $quizUser->setScore($totalScore);
+        $quizUser->setUser($this->getUser());
+        $quizUser->setDate(new DateTime());
+
+        $this->em->persist($quizUser);
+        $this->em->flush();
+
+
+        return new JsonResponse(['score' => $totalScore]);
     }
 }

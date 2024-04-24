@@ -7,3 +7,30 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import $ from 'jquery';
+
+$(document).ready(function () {
+    $("#view").click(function () {
+        var selectedAnswers = [];
+        $("input[type='radio']:checked").each(function () {
+            selectedAnswers.push($(this).val());
+        });
+        $.ajax({
+            url: '/calculate-score',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ selectedAnswers: selectedAnswers }),
+            success: function (response) {
+                if (response.score < selectedAnswers.length) {
+                    $("#score").text('Votre score est: ' + response.score + '/' + selectedAnswers.length).css('color', 'red');
+                } else {
+                    $("#score").text('Votre score est: ' + response.score + '/' + selectedAnswers.length).css('color', 'green');
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        $(this).hide();
+    });
+});
